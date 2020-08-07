@@ -1,7 +1,79 @@
 <app-header></app-header>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Manage Products</h1>
-        
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Manage Products</h1>
     </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Event</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Description</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false">Gallery</a>
+        </li>
+    </ul>
+    <form #data="ngForm" (ngSubmit)="OnSubmit(data)">
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Event and Cover Image Start -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-6 p-3">
+                        <h4>Title</h4>
+                        <input type="text" class="form-control" name="EventTitle" placeholder="Event Title" ngModel required>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-6 mx-auto p-3">
+                        <h4>Cover Image</h4>
+                        <img [src]="imgSrc" width="100%" height="200px" (click)="fileUploader.click()">
+                        <input type="file" style="display: none;" required class="form-control pb-2" #fileUploader (change)="CoverImg($event)"
+                            name="file" ngModel accept="image/*" /><br><br>
+                        <a class="btn" style="background-color: #1C4F9C;color: #fff;" (click)="fileUploader.click()">Upload</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Event and Cover Image End -->
+
+            <!-- Description Start -->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+               <div class="row">
+                   <div class="col-lg-10 col-md-10 col-12 p-3">
+                        <h4>Description</h4><br>
+                        <ckeditor data="<p></p>" name="EventDescription" ngModel></ckeditor>
+                   </div>
+               </div>
+            </div>
+            <!-- Description End -->
+
+            <!-- Gallery Start -->
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="card mx-auto GalleryAdd my-4">
+                    <div class="card-body">
+                        <input type="file" name="file" class="inputfile custom-file-input" multiple
+                            (change)="galleryImageProcessing($event)" #galleryImage accept="image/*" ngModel required />
+                        <a class="btn my-3" (click)="galleryImage.click()"  style="background-color: #1C4F9C; color: #fff;" type="submit">Upload</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg- col-md-3 col-12" >
+                        
+                    </div>
+                </div>
+                <div class="row border-bottom mb-3">
+                    <h5>Preview</h5>
+                    <div class="col-lg-3 col-md-3 col-12 py-3" *ngFor="let url of images;let i = index">                    
+                        <div class="card bg-dark text-white">
+                            <img [src]="url" height="200px" width="100%" style="margin: 3px;">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn" [disabled]="data.invalid" style="background-color: #1C4F9C;color: #fff;">Save Post</button>
+            </div>
+        </div>
+    </form>
 </main>
