@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "splixcubeforbusiness": {
+      "hosting": {
+        "project-starter": [
+          "splixcubeforbusiness"
+        ]
+      }
+    }
+  }
+}
