@@ -16,7 +16,7 @@ export class AuthService {
       if(res){
         localStorage.setItem("uid",res.uid)
         localStorage.setItem("email",res.email)
-        this.router.navigateByUrl("/dashboard")
+        // this.router.navigateByUrl("/dashboard")
       }
       else{
         localStorage.removeItem("uid")
@@ -54,7 +54,7 @@ export class AuthService {
       localStorage.setItem("uid",res.user.uid)
       localStorage.setItem("email",res.user.email)
       this.common.showToast("success","Successfull","You are LoggedIn successfully")
-      this.router.navigateByUrl("/dashboard")
+      this.router.navigateByUrl("/")
       return res.user.uid
      }).catch(err=>{
       // code to generate a notification alert of wrong credentials
@@ -77,7 +77,9 @@ export class AuthService {
 
    isAuthenticated(){
     if(localStorage.getItem("uid")){
-      return true
+      if(this.getUid() == "fqF1roX3AWSYpHRJb3AmPIjlltl1"){
+        return true
+      }
     }
     else{
       return false
@@ -89,7 +91,7 @@ export class AuthService {
       localStorage.removeItem("uid")
       localStorage.removeItem("email")
       this.afAuth.signOut()
-      window.location.reload()
+      this.common.stopLoader()
    }
 
    getUid(){
