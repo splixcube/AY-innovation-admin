@@ -15,6 +15,9 @@ export class ProductsComponent implements OnInit {
   images = []
   myForm
   GalleryImg
+  specificationArray = []
+  dataSheetFilePath
+  dataSheetFileUrl
   constructor(public product:ProductsService) { }
 
   ngOnInit(): void {
@@ -38,6 +41,16 @@ export class ProductsComponent implements OnInit {
     this.CoverEvent = event.target.files[0]
   }
 
+  datasheetFile(event){
+    let now = new Date()
+    let rand = now.toString()
+    let path="datasheet/1"+rand
+    this.dataSheetFilePath = path
+    this.dataSheetFileUrl = event.target.files[0]
+    console.log("dataSheetFilePath",this.dataSheetFilePath)
+    console.log("dataSheetFileEvent",this.dataSheetFileUrl)
+  }
+
   galleryImageProcessing(event){
     console.log(event)
     this.GalleryImg = event
@@ -59,6 +72,21 @@ export class ProductsComponent implements OnInit {
     
   }
 
+  onSpecificationDelete(i){
+    console.log(i)
+    this.specificationArray.splice(i,1)
+  }
+
+  async onAddSpecification(key,value){
+    console.log(key.value,value.value)
+    let data = {
+      key:key.value,
+      value:value.value
+    }
+    await this.specificationArray.push(data)
+    console.log(this.specificationArray)
+  }
+
   PreviewDelete(index){
     console.log(index)
     this.images.splice(index,1)
@@ -66,7 +94,7 @@ export class ProductsComponent implements OnInit {
 
   OnSubmit(data:NgForm){
     console.log(data.value)
-    this.product.addProduct(data.value,this.CoverPath,this.CoverEvent,this.GalleryImg,)
+    this.product.addProduct(data.value,this.CoverPath,this.CoverEvent,this.specificationArray,this.dataSheetFilePath,this.dataSheetFileUrl,this.GalleryImg)
     // data.resetForm()
     // this.images = []
     // this.imgSrc = 'assets/images/click-image.jpg'

@@ -20,6 +20,7 @@ import { BannerComponent } from './Admin/banner/banner.component';
 import { ProductsComponent } from './Admin/products/products.component';
 import { AuthComponent } from './auth/auth.component';
 import { SigninComponent } from './auth/signin/signin.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SigninComponent } from './auth/signin/signin.component';
     BrowserAnimationsModule, // required animations module
     NgxUiLoaderModule,
     ToastrModule.forRoot(), // ToastrModule added
-    FormsModule
+    FormsModule,
+    EditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

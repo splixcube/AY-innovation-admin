@@ -14,6 +14,10 @@
                 aria-selected="false">Description</a>
         </li>
         <li class="nav-item" role="presentation">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#specification" role="tab" aria-controls="profile"
+                aria-selected="false">Specification</a>
+        </li>
+        <li class="nav-item" role="presentation">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                 aria-selected="false">Gallery</a>
         </li>
@@ -26,8 +30,20 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-6 p-3">
                         <h4>Title</h4>
-                        <input type="text" class="form-control" name="EventTitle" placeholder="Event Title" ngModel required>
+                        <input type="text" class="form-control" name="ProductTitle" placeholder="Product Title" ngModel required>
+                        <br>
+                        <br>
+                        <h4>Select Category</h4>
+                        <select name="product_category" class="form-control" ngModel required>
+                            <option value="Network Camera">Network Camera</option>
+                            <option value="CP-MED">CP-MED</option>
+                            <option value="Body Temprature">Body Temprature</option>
+                        </select>
+                        <br>
+                        <h4>Select Product Datasheet</h4>
+                        <input type="file" name="datasheet" class="form-control" ngModel required (change)="datasheetFile($event)">
                     </div>
+
                     <div class="col-lg-4 col-md-4 col-6 mx-auto p-3">
                         <h4>Cover Image</h4>
                         <img [src]="imgSrc" width="100%" height="200px" (click)="fileUploader.click()">
@@ -44,11 +60,81 @@
                <div class="row">
                    <div class="col-lg-10 col-md-10 col-12 p-3">
                         <h4>Description</h4><br>
-                        <ckeditor data="<p></p>" name="EventDescription" ngModel></ckeditor>
+                        <editor name="description" ngModel
+                        [init]="{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                          ],
+                          toolbar:
+                            'undo redo | formatselect | bold italic backcolor | \
+                            alignleft aligncenter alignright alignjustify | \
+                            bullist numlist outdent indent | removeformat | help'
+                        }"
+                      ></editor>
                    </div>
                </div>
             </div>
             <!-- Description End -->
+            
+            <!-- Specification Start -->
+            <div class="tab-pane fade" id="specification" role="tabpanel" aria-labelledby="profile-tab">
+               <div class="row">
+                   <div class="col-lg-10 col-md-10 col-12 p-3">
+                        <h4>Specification</h4><br>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-12 card">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Key</th>
+                                            <th scope="col">Value</th>
+                                            <th scope="col"></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td><input type="text" #key class="form-control" name="key"></td>
+                                            <td><input type="text" #value class="form-control" name="value"></td>
+                                            <td><button class="btn btn-success" type="button" (click)="onAddSpecification(key,value)">Add</button></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-8 col-md-8 col-12 card">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Sr. No.</th>
+                                            <th scope="col">Key</th>
+                                            <th scope="col">Value</th>
+                                            <th scope="col"></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let data of specificationArray;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.key}}</td>
+                                            <td>{{data.value}}</td>
+                                            <td><button type="button" (click)="onSpecificationDelete(i)" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                  </div>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+            </div>
+            <!-- Specification End -->
 
             <!-- Gallery Start -->
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
