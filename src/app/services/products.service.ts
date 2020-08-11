@@ -4,13 +4,15 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { CommonService } from './common.service';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
+import { StorageService } from './storage.service';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   EventId
-  constructor(public db:AngularFirestore,public storage:AngularFireStorage,public common:CommonService) { }
+  constructor(public db:AngularFirestore,public storage:AngularFireStorage,public common:CommonService,public storageService:StorageService) { }
 
   addProduct(data,CoverPathh,CoverEventt,specificationArray,dataSheetPath,dataSheetUrl,galleryEvent?:any){
     this.common.showLoader()
@@ -97,4 +99,66 @@ export class ProductsService {
   }
 }
 
+getAllProducts(){
+  return this.db.collection("products",ref=>ref.orderBy("timeStamp","desc")).snapshotChanges().pipe(
+    map(actions => actions.map(a => {
+      const data = a.payload.doc.data() as any;
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    }))
+  )
 }
+
+getSingleProduct(id){
+  return this.db.collection("products").doc(id).valueChanges()
+}
+
+
+ productGalleryDelete(productId){
+  this.db.collection("products").doc(productId).collection("productGallery").snapshotChanges().pipe(
+    map(actions => actions.map(a => {
+      const data = a.payload.doc.data() as any;
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    }))
+  ).subscribe(productGalleryDetail=>{
+    console.log("productGalleryDetail",productGalleryDetail)
+    for (var i = 0; i < productGalleryDetail.length; i++){
+      const galleryPath = productGalleryDetail[i].productGalleryPath
+      const galleryId = productGalleryDetail[i].id
+      this.storageService.deleteImage(galleryPath).then(res=>{
+        this.db.collection("products").doc(productId).collection("productGallery").doc(galleryId).delete().then(res=>{
+          console.log(i,"gallery deleted")
+        })
+      })
+    }
+  })
+}
+
+async onProductDelete(productId,productAllDetails){
+  this.common.showLoader()
+  await this.productGalleryDelete(productId)
+  console.log("all product gallery images deleted")
+  this.storageService.deleteImage(productAllDetails.CoverPath).then(res=>{
+    if(productAllDetails.dataSheetFilePath){
+      this.storageService.deleteImage(productAllDetails.dataSheetFilePath).then(res=>{
+        this.db.collection("products").doc(productId).delete().then(res=>{
+          console.log("product deleted with datasheet file")
+          this.common.stopLoader()
+          this.common.showToast("success","Deleted!","Deleted Successful!")
+        })
+      })
+    }
+    else
+    {
+      this.db.collection("products").doc(productId).delete().then(res=>{
+        console.log("product deleted without datasheet file")
+        this.common.stopLoader()
+        this.common.showToast("success","Deleted!","Deleted Successful!")
+      })
+    }
+  })
+}
+}
+
+

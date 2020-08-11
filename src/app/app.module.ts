@@ -21,6 +21,7 @@ import { ProductsComponent } from './Admin/products/products.component';
 import { AuthComponent } from './auth/auth.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { ContactComponent } from './Admin/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     BannerComponent,
     ProductsComponent,
     AuthComponent,
-    SigninComponent
+    SigninComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

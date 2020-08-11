@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(public afAuth:AngularFireAuth,public db:AngularFirestore,public router:Router,public common:CommonService) {
     this.afAuth.authState.subscribe(res=>{
-      if(res){
+      if(res.uid == "fqF1roX3AWSYpHRJb3AmPIjlltl1"){
         localStorage.setItem("uid",res.uid)
         localStorage.setItem("email",res.email)
         // this.router.navigateByUrl("/dashboard")

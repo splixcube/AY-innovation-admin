@@ -8,6 +8,7 @@ import { BannerComponent } from './Admin/banner/banner.component';
 import { ProductsComponent } from './Admin/products/products.component';
 import { GalleryComponent } from './Admin/gallery/gallery.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ContactComponent } from './Admin/contact/contact.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path:'',component:DashboardComponent},
     {path:'banner',component:BannerComponent},
     {path:'products',component:ProductsComponent},
-    {path:'gallery',component:GalleryComponent}
+    {path:'gallery',component:GalleryComponent},
+    {path:'contact',component:ContactComponent}
   ]}
 ];
 

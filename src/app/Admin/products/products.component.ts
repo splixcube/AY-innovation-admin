@@ -18,9 +18,14 @@ export class ProductsComponent implements OnInit {
   specificationArray = []
   dataSheetFilePath
   dataSheetFileUrl
+  allProductsArray = []
   constructor(public product:ProductsService) { }
 
   ngOnInit(): void {
+    this.product.getAllProducts().subscribe(res=>{
+      this.allProductsArray = res
+      console.log(this.allProductsArray)
+    })
   }
 
   CoverImg(event){
@@ -98,7 +103,13 @@ export class ProductsComponent implements OnInit {
     // data.resetForm()
     // this.images = []
     // this.imgSrc = 'assets/images/click-image.jpg'
+  }
 
+  onDeleteProduct(id){
+    console.log(id)
+    this.product.getSingleProduct(id).subscribe(productDetail=>{
+      this.product.onProductDelete(id,productDetail)
+    })
   }
 
 

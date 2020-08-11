@@ -33,11 +33,14 @@
                         <input type="text" class="form-control" name="ProductTitle" placeholder="Product Title" ngModel required>
                         <br>
                         <br>
+                        <h4>Product Price</h4>
+                        <input type="number" name="product_price" placeholder="Product Price" class="form-control" ngModel required>
+                        <br>
                         <h4>Select Category</h4>
                         <select name="product_category" class="form-control" ngModel required>
-                            <option value="Network Camera">Network Camera</option>
+                            <option value="Network-Camera">Network Camera</option>
                             <option value="CP-MED">CP-MED</option>
-                            <option value="Body Temprature">Body Temprature</option>
+                            <option value="Body-Temprature">Body Temprature</option>
                         </select>
                         <br>
                         <h4>Select Product Datasheet</h4>
@@ -162,4 +165,38 @@
             </div>
         </div>
     </form>
+
+    <hr>
+    <!-- All Products Show Here  -->
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 my-3 border-bottom">
+        <h1 class="h2">All Products</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Sr No.</th>
+                        <th scope="col">Cover Image</th>
+                        <th scope="col">Product Title</th>
+                        <th scope="col">Product Category</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of allProductsArray;let i = index" >
+                            <th scope="row">{{i+1}}</th>
+                            <td><img [src]="product.CoverUrl" style="width: 65px;height: 65px; border-radius: 50%;"></td>
+                            <td>{{product.ProductTitle}}</td>
+                            <td>{{product.product_category}}</td>
+                            <td><button class="btn btn-danger" (click)="onDeleteProduct(product.id)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </div>
 </main>
