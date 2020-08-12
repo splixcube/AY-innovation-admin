@@ -54,7 +54,7 @@ export class AuthService {
       localStorage.setItem("uid",res.user.uid)
       localStorage.setItem("email",res.user.email)
       this.common.showToast("success","Successfull","You are LoggedIn successfully")
-      this.router.navigateByUrl("/")
+      this.router.navigateByUrl("/admin")
       return res.user.uid
      }).catch(err=>{
       // code to generate a notification alert of wrong credentials
@@ -90,6 +90,7 @@ export class AuthService {
       this.common.showLoader()
       localStorage.removeItem("uid")
       localStorage.removeItem("email")
+      this.router.navigateByUrl("/auth")
       this.afAuth.signOut()
       this.common.stopLoader()
    }

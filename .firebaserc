@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "splixcubeforbusiness": {
-      "hosting": {
-        "project-starter": [
-          "splixcubeforbusiness"
-        ]
-      }
-    }
+  "projects": {
+    "default": "ay-innovation-admin"
   }
 }

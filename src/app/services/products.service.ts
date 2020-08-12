@@ -144,8 +144,11 @@ async onProductDelete(productId,productAllDetails){
       this.storageService.deleteImage(productAllDetails.dataSheetFilePath).then(res=>{
         this.db.collection("products").doc(productId).delete().then(res=>{
           console.log("product deleted with datasheet file")
-          this.common.stopLoader()
           this.common.showToast("success","Deleted!","Deleted Successful!")
+        }).catch(err=>{
+          this.common.showToast("error","Error!",err)
+        }).finally(()=>{
+          this.common.stopLoader()
         })
       })
     }
@@ -155,10 +158,12 @@ async onProductDelete(productId,productAllDetails){
         console.log("product deleted without datasheet file")
         this.common.stopLoader()
         this.common.showToast("success","Deleted!","Deleted Successful!")
+      }).catch(err=>{
+        this.common.showToast("error","Error!",err)
+      }).finally(()=>{
+        this.common.stopLoader()
       })
     }
   })
 }
 }
-
-
