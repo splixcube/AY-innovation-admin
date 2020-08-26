@@ -14,7 +14,7 @@ export class ProductsService {
   EventId
   constructor(public db:AngularFirestore,public storage:AngularFireStorage,public common:CommonService,public storageService:StorageService) { }
 
-  addProduct(data,CoverPathh,CoverEventt,specificationArray,dataSheetPath,dataSheetUrl,galleryEvent?:any){
+  addProduct(data,slug,CoverPathh,CoverEventt,specificationArray,dataSheetPath,dataSheetUrl,galleryEvent?:any){
     this.common.showLoader()
     if(galleryEvent){
     console.log("Event with gallery")
@@ -29,7 +29,8 @@ export class ProductsService {
             let dataSheetFilePath = dataSheetPath
             let dataSheetFileUrl = dataSheet
             let specification = specificationArray
-            let allData = {CoverPath,CoverUrl,dataSheetFilePath,dataSheetFileUrl,timeStamp,specification,...data}
+            let slugProductCategory = slug
+            let allData = {CoverPath,CoverUrl,dataSheetFilePath,dataSheetFileUrl,timeStamp,specification,slugProductCategory,...data}
             console.log(allData)
             this.db.collection("products").add(allData).then(uid=>{
               console.log(uid)
@@ -81,7 +82,8 @@ export class ProductsService {
             let dataSheetFilePath = dataSheetPath
             let dataSheetFileUrl = dataSheet
             let specification = specificationArray
-            let allData = {CoverPath,CoverUrl,dataSheetFilePath,dataSheetFileUrl,timeStamp,specification,...data}
+            let slugProductCategory = slug
+            let allData = {CoverPath,CoverUrl,dataSheetFilePath,dataSheetFileUrl,timeStamp,specification,slugProductCategory,...data}
             console.log(allData)
             this.db.collection("products").add(allData).then(res=>{
               console.log("Event Save Without Gallery")

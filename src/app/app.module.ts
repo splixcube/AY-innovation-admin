@@ -22,6 +22,7 @@ import { AuthComponent } from './auth/auth.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ContactComponent } from './Admin/contact/contact.component';
+import { SlugPipe } from './Pipes/slug.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ContactComponent } from './Admin/contact/contact.component';
     ProductsComponent,
     AuthComponent,
     SigninComponent,
-    ContactComponent
+    ContactComponent,
+    SlugPipe
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { ContactComponent } from './Admin/contact/contact.component';
     FormsModule,
     EditorModule
   ],
-  providers: [],
+  providers: [SlugPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

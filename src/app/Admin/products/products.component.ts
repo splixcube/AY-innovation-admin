@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { NgForm } from '@angular/forms';
+import { SlugPipe } from 'src/app/Pipes/slug.pipe';
 
 @Component({
   selector: 'app-products',
@@ -19,7 +20,7 @@ export class ProductsComponent implements OnInit {
   dataSheetFilePath
   dataSheetFileUrl
   allProductsArray = []
-  constructor(public product:ProductsService) { }
+  constructor(public product:ProductsService,public pipe:SlugPipe) { }
 
   ngOnInit(): void {
     this.product.getAllProducts().subscribe(res=>{
@@ -99,7 +100,8 @@ export class ProductsComponent implements OnInit {
 
   OnSubmit(data:NgForm){
     console.log(data.value)
-    this.product.addProduct(data.value,this.CoverPath,this.CoverEvent,this.specificationArray,this.dataSheetFilePath,this.dataSheetFileUrl,this.GalleryImg)
+    let slugProductCategory = this.pipe.transform(data.value.product_category)
+    this.product.addProduct(data.value,slugProductCategory,this.CoverPath,this.CoverEvent,this.specificationArray,this.dataSheetFilePath,this.dataSheetFileUrl,this.GalleryImg)
     // data.resetForm()
     // this.images = []
     // this.imgSrc = 'assets/images/click-image.jpg'
